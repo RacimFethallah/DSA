@@ -80,6 +80,8 @@ class LinkedList:
                     itr= itr.next
                     prev = prev.next
 
+    # def insert_at(self, index): todo
+
                 
 
 
