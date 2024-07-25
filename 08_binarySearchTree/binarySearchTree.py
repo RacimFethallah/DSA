@@ -83,7 +83,38 @@ class BinarySearchTreeNode:
     def calculate_sum(self):
         return sum(self.in_order_traversal())
     
-def post_order_traversal(node: BinarySearchTreeNode):
+
+    def delete(self, val):
+        if val < self.data:
+            if self.left:
+                self.left.delete(val)
+            else:
+                return None #doesnt exists
+        elif val > self.data:
+            if self.right:
+                self.right.delete(val)
+            else:
+                return None #doesnt exists
+            
+        else: #value does exists and the current node is the value
+            if self.left is None and self.right is None:
+                return None
+            if self.left is None:
+                return self.right
+            if self.right is None:
+                return self.left
+            
+            min_value = self.right.find_min()
+            self.data = min_value
+            self.right = self.right.delete(min_value)
+
+        return self
+
+
+
+
+    
+def post_order_traversal(node: BinarySearchTreeNode): #O(n)
     if node is None:
         return
     
@@ -93,7 +124,7 @@ def post_order_traversal(node: BinarySearchTreeNode):
 
     print(node.data, end= ' ')
         
-def pre_order_traversal(node: BinarySearchTreeNode):
+def pre_order_traversal(node: BinarySearchTreeNode): #O(n)
     if node is None:
         return
     
