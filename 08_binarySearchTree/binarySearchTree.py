@@ -4,20 +4,19 @@ class BinarySearchTreeNode:
         self.left = None
         self.right = None
 
-
-    def add_child(self,data):
-        #if already exists
+    def add_child(self, data):
+        # if already exists
         if data == self.data:
             return
 
         if data < self.data:
-            #we add the data in left subtree
+            # we add the data in left subtree
             if self.left:
                 self.left.add_child(data)
             else:
                 self.left = BinarySearchTreeNode(data)
         else:
-            #add data in right subtree
+            # add data in right subtree
             if self.right:
                 self.right.add_child(data)
             else:
@@ -25,39 +24,35 @@ class BinarySearchTreeNode:
 
     def in_order_traversal(self):
         elements = []
-
-        #visit left tree
+        # visit left tree
         if self.left:
             elements += self.left.in_order_traversal()
 
-
-        #visit base node:
+        # visit base node:
         elements.append(self.data)
 
-
-
-        #right subtree
+        # right subtree
         if self.right:
             elements += self.right.in_order_traversal()
 
         return elements
-    
+
     def search(self, val):
         if val == self.data:
             return True
-        
+
         if val < self.data:
             if self.left:
-               return self.left.search(val)
+                return self.left.search(val)
             else:
                 return False
 
         if val > self.data:
             if self.right:
-               return self.right.search(val)
+                return self.right.search(val)
             else:
                 return False
-    
+
     def find_min(self):
         # elements = self.in_order_traversal()
         # return elements[0]
@@ -68,7 +63,7 @@ class BinarySearchTreeNode:
             itr = itr.left
 
         return element
-    
+
     def find_max(self):
         # elements = self.in_order_traversal()
         # return elements[-1] #stack peek
@@ -79,31 +74,30 @@ class BinarySearchTreeNode:
             itr = itr.right
 
         return element
-    
+
     def calculate_sum(self):
         return sum(self.in_order_traversal())
-    
 
     def delete(self, val):
         if val < self.data:
             if self.left:
                 self.left.delete(val)
             else:
-                return None #doesnt exists
+                return None  # doesnt exists
         elif val > self.data:
             if self.right:
                 self.right.delete(val)
             else:
-                return None #doesnt exists
-            
-        else: #value does exists and the current node is the value
+                return None  # doesnt exists
+
+        else:  # value does exists and the current node is the value
             if self.left is None and self.right is None:
                 return None
             if self.left is None:
                 return self.right
             if self.right is None:
                 return self.left
-            
+
             min_value = self.right.find_min()
             self.data = min_value
             self.right = self.right.delete(min_value)
@@ -111,29 +105,27 @@ class BinarySearchTreeNode:
         return self
 
 
-
-
-    
-def post_order_traversal(node: BinarySearchTreeNode): #O(n)
+def post_order_traversal(node: BinarySearchTreeNode):  # O(n)
     if node is None:
         return
-    
-    post_order_traversal(node.left)
-    post_order_traversal(node.right)
+
+    if node.left:
+        post_order_traversal(node.left)
+    if node.right:
+        post_order_traversal(node.right)
+
+    print(node.data, end=" ")
 
 
-    print(node.data, end= ' ')
-        
-def pre_order_traversal(node: BinarySearchTreeNode): #O(n)
+def pre_order_traversal(node: BinarySearchTreeNode):  # O(n)
     if node is None:
         return
-    
-    print(node.data, end= ' ')
-    
-    pre_order_traversal(node.left)
-    pre_order_traversal(node.right)
 
-                
+    print(node.data, end=" ")
+    if node.left:
+        pre_order_traversal(node.left)
+    if node.right:
+        pre_order_traversal(node.right)
 
 
 def build_tree(elements):
@@ -143,15 +135,14 @@ def build_tree(elements):
         root.add_child(elements[i])
 
     return root
-    
 
-if __name__ == '__main__':
-    numbers = [17, 4 , 2 ,36, 5 , 6 ,8]
+
+if __name__ == "__main__":
+    numbers = [17, 4, 2, 36, 5, 6, 8]
     root = build_tree(numbers)
     print(root.in_order_traversal())
-    #print(root.find_max())
-    #print(root.find_min())
-    #print(root.calculate_sum())
+    # print(root.find_max())
+    # print(root.find_min())
+    # print(root.calculate_sum())
     post_order_traversal(root)
     pre_order_traversal(root)
-   
